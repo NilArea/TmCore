@@ -4,6 +4,8 @@
   "package": "net.nilarea.tmcore.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "minecraft.MappedRegistryAccess",
+    "minecraft.ResourceKeyAccessor"
   ],
   "client": [
   ],

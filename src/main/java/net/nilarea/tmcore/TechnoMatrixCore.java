@@ -1,13 +1,13 @@
 package net.nilarea.tmcore;
 
-import net.nilarea.tmcore.client.TmClientProxy;
-import net.nilarea.tmcore.common.TmCommonProxy;
+import net.nilarea.tmcore.client.ClientProxy;
+import net.nilarea.tmcore.common.CommonProxy;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.loading.FMLEnvironment;
 
+import com.tterrag.registrate.util.RegistrateDistExecutor;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 public class TechnoMatrixCore {
 
     public static final String MOD_ID = "tmcore";
+    public static final String MOD_NAME = "科技矩阵";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     @Getter
@@ -26,9 +27,6 @@ public class TechnoMatrixCore {
     public TechnoMatrixCore(IEventBus modEventBus, ModContainer modContainer) {
         TechnoMatrixCore.modEventBus = modEventBus;
         TechnoMatrixCore.modContainer = modContainer;
-        if (FMLEnvironment.getDist().isClient())
-            new TmClientProxy();
-        else
-            new TmCommonProxy();
+        RegistrateDistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
     }
 }
